@@ -1,0 +1,15 @@
+<nav>
+    <mat-toolbar color="primary">
+    <div>
+        <h1>Chat app</h1>
+    </div>
+    <div class="spacer"></div>
+    <div>
+        <a mat-button routerLink="/" routerLinkActive="link_active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+        <a mat-button routerLink="/login" routerLinkActive="link_active" [routerLinkActiveOptions]="{exact:true}">Login</a>
+        <a mat-button routerLink="/register" routerLinkActive="link_active" [routerLinkActiveOptions]="{exact:true}">Register</a>
+        <a mat-button routerLink="/chat" routerLinkActive="link_active" [routerLinkActiveOptions]="{exact:true}">Chat</a>
+        <button mat-button (click) = "logout()">Log out</button>
+    </div>
+    </mat-toolbar>
+</nav>

@@ -11,7 +11,7 @@ export class GroupListComponent {
   Groups:Group[] = []
   MyGroups:Group[] = []
 
-  constructor(){}
+  constructor(private groupService: GroupService){}
 
   ngOnInit(){
     

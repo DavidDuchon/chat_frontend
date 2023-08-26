@@ -1,4 +1,4 @@
-<div *ngIf="!hasToken">
+<div *ngIf="!hasToken" class="login">
     <form [formGroup]="loginCredentials" (ngSubmit)="login()">
         <mat-card >
             <mat-card-header>

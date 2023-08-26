@@ -1,4 +1,10 @@
 <div class="group">
-    <h1>{{Group!.groupName}}</h1>
-    <button (submit)="groupService.join(Group!.groupName)">Join</button>
+    <mat-card>
+        <mat-card-header>
+            <h4>{{Group!.groupName}}</h4>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-button color = "primary" (click)="groupService.join(Group!.groupName,OnJoin)">Join</button>
+        </mat-card-actions>
+    </mat-card>
 </div>

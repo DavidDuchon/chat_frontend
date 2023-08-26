@@ -19,6 +19,8 @@ import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { GroupComponent } from './group/group.component';
 import { GroupListComponent } from './group-list/group-list.component';
+import { MessageComponent } from './message/message.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { GroupListComponent } from './group-list/group-list.component';
     ChatComponent,
     NavigationComponent,
     GroupComponent,
-    GroupListComponent
+    GroupListComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { GroupListComponent } from './group-list/group-list.component';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

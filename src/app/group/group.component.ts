@@ -1,6 +1,8 @@
 import { Component,Input } from '@angular/core';
 import { Group } from '../Group';
 import { GroupService } from '../group.service';
+import { CallbackObject } from '../Callback';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group',
@@ -10,5 +12,10 @@ import { GroupService } from '../group.service';
 export class GroupComponent {
   @Input() Group:Group | undefined
 
-  constructor(public groupService: GroupService){}
+  OnJoin: CallbackObject = {
+    next: (res) => {
+      this.router.navigate([`/chat/${this.Group!.groupName}`])
+    }
+  }
+  constructor(public groupService: GroupService,public router: Router){}
 }

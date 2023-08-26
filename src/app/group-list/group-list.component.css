@@ -1,0 +1,9 @@
+.myGroups,.groups {
+    display:flex;
+    align-items:center;
+    justify-content: space-around;
+}
+
+.grouping {
+    display:flex;
+}

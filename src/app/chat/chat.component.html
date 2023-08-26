@@ -1,1 +1,36 @@
-<p>chat works!</p>
+<div class="container">
+    <p>Current group: {{currentGroupId}}</p>
+        <mat-card>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+            <p>Hello</p>
+        </mat-card>
+    <div>
+        <form (ngSubmit)="sendMessage(messageForm.value.message!)" [formGroup] = 'messageForm'>
+            <div class ="inputbox">
+                <div class="form-field">
+                    <mat-form-field>
+                        <mat-label>Message</mat-label>
+                        <input matInput formControlName="message">
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!messageForm.valid">Send</button>
+            </div>
+        </form>
+    </div>
+</div>

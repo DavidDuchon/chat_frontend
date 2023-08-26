@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 import { Group } from './Group';
+import { CallbackObject } from './Callback';
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +12,19 @@ export class GroupService {
 
   constructor(private http: HttpClient,private authService: AuthenticationService,private router:Router) { }
 
-  join(groupName: string){
-    this.authService.makeRequest("https://localhost:7298/Group/join",{GroupName:groupName},this.router,{
-      next: (res) => {
-        this.router.navigate([`/chat/${groupName}`]);
-      }
-    });
+  join(groupName: string,callbackObject: CallbackObject){
+    this.authService.makeRequest("https://localhost:7298/Group/join",{groupName:groupName},this.router,callbackObject);
   }
 
-  getUserGroups(UserGroups: Group[]){
-    this.authService.makeRequest("https://localhost:7298/Group/myGroups",{},this.router,{
-      next: (res) => {
-        UserGroups = res.body as Group[]; 
-      }
-    });
+  getUserGroups(callbackObject: CallbackObject){
+    this.authService.makeRequest("https://localhost:7298/Group/myGroups",{},this.router,callbackObject);
   }
 
-  getGroups(Groups:Group[]){
-    this.authService.makeRequest("https://localhost:7298/Group/groups",{},this.router,{
-      next: (res) => {
-        Groups = res.body as Group[]; 
-      }
-    });
+  getGroups(callbackObject: CallbackObject){
+    this.authService.makeRequest("https://localhost:7298/Group/groups",{},this.router,callbackObject);
+  }
+
+  addGroup(groupName: string,callbackObject: CallbackObject){
+    this.authService.makeRequest('https://localhost:7298/Group/create',{groupName: groupName},this.router,callbackObject);
   }
 }

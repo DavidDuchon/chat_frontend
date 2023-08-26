@@ -17,6 +17,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
+import { GroupComponent } from './group/group.component';
+import { GroupListComponent } from './group-list/group-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     RegisterComponent,
     ChatComponent,
-    NavigationComponent
+    NavigationComponent,
+    GroupComponent,
+    GroupListComponent
   ],
   imports: [
     BrowserModule,

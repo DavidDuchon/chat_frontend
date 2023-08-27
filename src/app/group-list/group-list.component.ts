@@ -19,6 +19,7 @@ export class GroupListComponent {
   constructor(private fb: FormBuilder,private groupService: GroupService){}
 
   ngOnInit(){
+    console.log("Welcome from /chat path");
    this.groupService.getGroups({
     next: (res) =>{
       this.Groups = res.body as Group[];

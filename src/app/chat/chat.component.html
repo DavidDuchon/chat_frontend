@@ -1,24 +1,7 @@
 <div class="container">
     <p>Current group: {{currentGroupId}}</p>
         <mat-card>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
-            <p>Hello</p>
+            <p *ngFor="let message of messages">{{message.username}}:{{message.message}}</p>
         </mat-card>
     <div>
         <form (ngSubmit)="sendMessage(messageForm.value.message!)" [formGroup] = 'messageForm'>

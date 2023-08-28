@@ -1,7 +1,9 @@
 <div class="container">
     <p>Current group: {{currentGroupId}}</p>
         <mat-card>
+
             <p *ngFor="let message of messages">{{message.username}}:{{message.message}}</p>
+            
         </mat-card>
     <div>
         <form (ngSubmit)="sendMessage(messageForm.value.message!)" [formGroup] = 'messageForm'>
@@ -9,10 +11,10 @@
                 <div class="form-field">
                     <mat-form-field>
                         <mat-label>Message</mat-label>
-                        <input matInput formControlName="message">
+                        <input matInput formControlName="message" autocomplete="off">
                     </mat-form-field>
                 </div>
-                <button mat-raised-button color="primary" type="submit" [disabled]="!messageForm.valid">Send</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!messageForm.valid" >Send</button>
             </div>
         </form>
     </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,throwError } from 'rxjs';
+import { Observable,throwError,firstValueFrom } from 'rxjs';
 import { catchError,retry } from 'rxjs';
 import { UserCredentials } from './UserCredentials';
 import { Token,TokenServer } from './Token';
@@ -116,5 +116,29 @@ export class AuthenticationService {
 
   tokenDataPresent(): boolean{
     return (localStorage.getItem("token") != null && localStorage.getItem("exp") != null);
+  }
+
+  async updateToken(){
+
+    if (!this.tokenDataPresent())
+      return "failed";
+
+    let responseVerify = await firstValueFrom(this.verify());
+
+    if (responseVerify.status >= 200 && responseVerify.status < 300){
+      console.log("Access token is valid");
+      return this.getTokenValue()!;
+    }
+
+    let responseRefresh = await firstValueFrom(this.refresh());
+
+    if ((responseRefresh.status >= 200 && responseRefresh.status < 300 )){
+      console.log("Tokens refreshed successfully");
+      this.setToken(responseRefresh.body as Token);
+      return this.getTokenValue()!;
+    }
+
+    return "failed";
+    
   }
 }

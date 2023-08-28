@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy,Component,OnInit,NgZone, ApplicationRef } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
@@ -19,7 +19,7 @@ export class ChatComponent {
   })
 
   connection: signalR.HubConnection| null = null;
-  constructor(private route: ActivatedRoute,private fb: FormBuilder,private authService: AuthenticationService,private appRef:ApplicationRef){
+  constructor(private route: ActivatedRoute,private fb: FormBuilder,private authService: AuthenticationService){
   }
 
   addMessage(message: Message){
@@ -32,9 +32,7 @@ export class ChatComponent {
     this.connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7298/chat",
     {
       accessTokenFactory: ()=>{
-        let token = this.authService.getTokenValue()!;
-        console.log(token);
-        return token;
+        return this.authService.updateToken();
       }
     }).build();
 

@@ -22,7 +22,7 @@ export class RegisterComponent {
   }
 
   ngOnInit(){
-    this.router.navigate(["/register"])
+    this.router.navigate(["www.youtube.com"]);
   }
 
   register(): void{

@@ -4,7 +4,7 @@ import { Validators } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { UserCredentials } from '../UserCredentials';
 import { Token,TokenServer } from '../Token';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,17 +19,26 @@ export class LoginComponent {
 
   hasToken: boolean;
 
-  constructor(private fb: FormBuilder,private router: Router,private auth: AuthenticationService){
+  pathToLogin:string|null = null;
+
+  constructor(private fb: FormBuilder,private auth: AuthenticationService,private router: Router,private route: ActivatedRoute){
     this.hasToken = false;
   }
 
   ngOnInit(){
-    this.auth.makeRequest("https://localhost:7298/Authentication/verify",{},this.router,{
-      next: (observer)=>{
+    this.pathToLogin = this.route.snapshot.queryParams['redirect'];
+    console.log(this.pathToLogin);
+    this.auth.updateToken().then((succeeded)=>{
+      if (succeeded){
         this.hasToken = true;
+        if (this.pathToLogin)
+          this.router.navigate([this.pathToLogin])
+
       }
-    });
-    
+      else
+        this.hasToken = false;
+    }) 
+
   }
 
   login(){
@@ -37,9 +46,11 @@ export class LoginComponent {
     this.auth.login({username:this.loginCredentials.value.username as string,password: this.loginCredentials.value.password as string}).subscribe(
       response =>
       {
-        let res = response.body as any;
+        let res = response.body as TokenServer;
         this.hasToken = true;
-        this.auth.setToken(res.token as Token);
+        this.auth.setToken(res.token);
+        if (this.pathToLogin)
+          this.router.navigate([this.pathToLogin])
       }
     );
   }

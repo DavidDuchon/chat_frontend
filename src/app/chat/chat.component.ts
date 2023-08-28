@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
 import { AuthenticationService } from '../authentication.service';
 import { Message } from '../Message';
@@ -18,12 +18,20 @@ export class ChatComponent {
     message: ['',Validators.required]
   })
 
-  connection: signalR.HubConnection| null = null;
+  connection: signalR.HubConnection|null = null;
   constructor(private route: ActivatedRoute,private fb: FormBuilder,private authService: AuthenticationService){
   }
 
   addMessage(message: Message){
     this.messages.push(message);
+  }
+
+  async getToken(){
+    let succeeded = await this.authService.updateToken();
+    if (!succeeded){
+      this.connection?.stop();
+    }
+    return this.authService.getTokenValue();
   }
 
   ngOnInit(){
@@ -32,19 +40,21 @@ export class ChatComponent {
     this.connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7298/chat",
     {
       accessTokenFactory: ()=>{
-        return this.authService.updateToken();
+        return this.getToken();
       }
     }).build();
 
-    this.connection.start().then((value) => {
-      console.log("connection suceeded");
-      this.connection!.invoke("AddToGroup",this.currentGroupId);
-    },
-    (reason) => {
-      console.log("connection rejected");
+    this.connection.start().then(
+      (value) => {
+          console.log("connection suceeded");
+          this.connection!.invoke("AddToGroup",this.currentGroupId);
+      },
+      (reason) => {
+        console.log("connection rejected");
     });
 
-    this.connection.on("RecieveMessage", (user,message) => {
+    this.connection.on("RecieveMessage", 
+    (user,message) => {
 
       this.addMessage({username: user,message:message});
     })

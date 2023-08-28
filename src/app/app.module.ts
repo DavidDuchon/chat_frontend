@@ -16,11 +16,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { GroupComponent } from './group/group.component';
 import { GroupListComponent } from './group-list/group-list.component';
 import { MessageComponent } from './message/message.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     HttpClientModule,
     ScrollingModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
